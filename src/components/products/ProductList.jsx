@@ -53,7 +53,7 @@ const ProductList = () => {
                             )}
                         </p>
                         <p className="text-yellow-500 mt-2">
-                            ⭐ {product.rating}/{product.rating}
+                            ⭐ {product.rating}/{5}
                         </p>
                         <div className="mt-3 flex gap-2">
                             {product.tags.map((tag, index) => (
@@ -82,7 +82,7 @@ const ProductList = () => {
                                             Description: {review.description}
                                         </p>
                                         <p className="text-yellow-500 text-sm">
-                                            ⭐ {review.rating}/{review.rating}
+                                            ⭐ {review.rating}/{5}
                                         </p>
                                     </div>
                                 ))}
