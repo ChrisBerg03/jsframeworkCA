@@ -1,38 +1,47 @@
-// change to a fetch later
 import { useState, useEffect } from "react";
 
 const url = "https://v2.api.noroff.dev/online-shop/";
 
-const ProductList = () => {
+export default function ProductList() {
     const [products, setProducts] = useState([]);
+    const [sortOrder, setSortOrder] = useState("asc");
+    const [limit, setLimit] = useState(10);
+
     useEffect(() => {
         async function getProducts() {
-            const res = await fetch(url);
+            const res = await fetch(
+                `${url}?sortOrder=${sortOrder}&limit=${limit}`
+            );
             const data = await res.json();
-            console.log(data.data);
             setProducts(data.data);
         }
         getProducts();
-    }, []);
+    }, [limit, sortOrder]);
 
     return (
-        <div>
-            <h1>Products</h1>
-            {products.map((product) => (
-                <div
-                    key={product.id}
-                    className="max-w-sm bg-white rounded-2xl shadow-lg p-5 space-y-4"
+        <div className="max-w-7xl mx-auto p-4">
+            <h1 className="text-2xl font-bold mb-6">Products</h1>
+            <div className="flex justify-between items-center mb-4">
+                <button
+                    onClick={() =>
+                        setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                    }
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg"
                 >
-                    <img
-                        src={product.image.url}
-                        alt={
-                            product.image.alt
-                                ? product.image.alt
-                                : "Product image"
-                        }
-                        className="w-full h-60 object-cover rounded-xl"
-                    />
-                    <div>
+                    Sort: {sortOrder.toUpperCase()}
+                </button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {products.map((product) => (
+                    <div
+                        key={product.id}
+                        className="bg-white rounded-2xl shadow-lg p-5 space-y-4"
+                    >
+                        <img
+                            src={product.image.url}
+                            alt={product.image.alt || "Product image"}
+                            className="w-full h-60 object-cover rounded-xl"
+                        />
                         <h2 className="text-lg font-semibold">
                             {product.title}
                         </h2>
@@ -53,46 +62,19 @@ const ProductList = () => {
                             )}
                         </p>
                         <p className="text-yellow-500 mt-2">
-                            ⭐ {product.rating}/{5}
+                            ⭐ {product.rating}/5
                         </p>
-                        <div className="mt-3 flex gap-2">
-                            {product.tags.map((tag, index) => (
-                                <span
-                                    key={index}
-                                    className="bg-gray-200 text-gray-700 text-sm px-2 py-1 rounded-full"
-                                >
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>{" "}
-                        {product.reviews.length > 0 && (
-                            <div className="mt-4 border-t pt-3">
-                                <h3 className="text-sm font-semibold">
-                                    Reviews:
-                                </h3>
-                                {product.reviews.map((review) => (
-                                    <div
-                                        key={review.id}
-                                        className="mt-2 p-2 bg-gray-100 rounded-lg"
-                                    >
-                                        <p className="text-sm font-medium">
-                                            Name: {review.username}
-                                        </p>
-                                        <p className="text-gray-600 text-sm">
-                                            Description: {review.description}
-                                        </p>
-                                        <p className="text-yellow-500 text-sm">
-                                            ⭐ {review.rating}/{5}
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
+            <div className="flex justify-center mt-6">
+                <button
+                    onClick={() => setLimit(limit + 10)}
+                    className="px-4 py-2 bg-gray-300 rounded-lg"
+                >
+                    Load More
+                </button>
+            </div>
         </div>
     );
-};
-
-export default ProductList;
+}
