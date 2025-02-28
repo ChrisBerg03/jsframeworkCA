@@ -52,7 +52,7 @@ export function Header() {
                     </Link>
                     <Link to="/cart" onClick={() => setIsOpen(false)}>
                         <img
-                            src="../src/assets/cart.svg"
+                            src="/cart.svg"
                             alt="Cart"
                             height={30}
                             width={30}
