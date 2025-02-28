@@ -20,7 +20,7 @@ export function Header() {
                     </Link>
                     <Link to="/cart">
                         <img
-                            src="./public/assets/cart.svg"
+                            src="./public/cart.svg"
                             alt="Cart"
                             height={30}
                             width={30}
