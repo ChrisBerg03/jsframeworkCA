@@ -1,4 +1,5 @@
-// react-toastify. DOWNLOAD THIS BITCH
+// react-toastify. Use for toast alert
+// react-hook-form. use for form validation
 
 const Contact = () => {
     return (
