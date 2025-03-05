@@ -1,7 +1,9 @@
+import ProductItem from "../components/products/ProductItem";
+
 const ProductPage = () => {
     return (
         <div>
-            <h1>ProductPage</h1>
+            <ProductItem />
         </div>
     );
 };

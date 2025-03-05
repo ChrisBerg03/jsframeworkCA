@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const url = "https://v2.api.noroff.dev/online-shop/";
 
@@ -33,38 +34,39 @@ export default function ProductList() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {products.map((product) => (
-                    <div
-                        key={product.id}
-                        className="bg-white rounded-2xl shadow-lg p-5 space-y-4"
-                    >
-                        <img
-                            src={product.image.url}
-                            alt={product.image.alt || "Product image"}
-                            className="w-full h-60 object-cover rounded-xl"
-                        />
-                        <h2 className="text-lg font-semibold">
-                            {product.title}
-                        </h2>
-                        <p className="text-gray-600">{product.description}</p>
-                        <p className="mt-2 text-lg font-medium">
-                            Price:{" "}
-                            {product.discountedPrice !== product.price ? (
-                                <>
-                                    <span className="text-gray-500 line-through mr-2">
-                                        {product.price}kr
-                                    </span>
-                                    <span className="text-red-500 font-bold">
-                                        Sale: {product.discountedPrice}kr
-                                    </span>
-                                </>
-                            ) : (
-                                <span>{product.price}kr</span>
-                            )}
-                        </p>
-                        <p className="text-yellow-500 mt-2">
-                            ⭐ {product.rating}/5
-                        </p>
-                    </div>
+                    <Link key={product.id} to={"product/" + product.id}>
+                        <div className="bg-white rounded-2xl shadow-lg p-5 space-y-4">
+                            <img
+                                src={product.image.url}
+                                alt={product.image.alt || "Product image"}
+                                className="w-full h-60 object-cover rounded-xl"
+                            />
+                            <h2 className="text-lg font-semibold">
+                                {product.title}
+                            </h2>
+                            <p className="text-gray-600">
+                                {product.description}
+                            </p>
+                            <p className="mt-2 text-lg font-medium">
+                                Price:{" "}
+                                {product.discountedPrice !== product.price ? (
+                                    <>
+                                        <span className="text-gray-500 line-through mr-2">
+                                            {product.price}kr
+                                        </span>
+                                        <span className="text-red-500 font-bold">
+                                            Sale: {product.discountedPrice}kr
+                                        </span>
+                                    </>
+                                ) : (
+                                    <span>{product.price}kr</span>
+                                )}
+                            </p>
+                            <p className="text-yellow-500 mt-2">
+                                ⭐ {product.rating}/5
+                            </p>
+                        </div>
+                    </Link>
                 ))}
             </div>
             <div className="flex justify-center mt-6">
