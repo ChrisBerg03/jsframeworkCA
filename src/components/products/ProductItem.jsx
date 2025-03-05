@@ -20,6 +20,7 @@ export default function ProductItem() {
                 const response = await fetch(`${url}${id}`);
 
                 if (!response.ok) {
+                    window.location.href = "/";
                     throw new Error("Failed to fetch product");
                 }
                 const data = await response.json();
@@ -40,7 +41,7 @@ export default function ProductItem() {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-row justify-center items-center">
             <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 space-y-10">
                 <img
                     src={product.image.url}

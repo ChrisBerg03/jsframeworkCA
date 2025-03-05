@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { getData, search } from "../../fetches/fetch";
 
 const url = "https://v2.api.noroff.dev/online-shop/";
 
@@ -7,14 +8,12 @@ export default function ProductList() {
     const [products, setProducts] = useState([]);
     const [sortOrder, setSortOrder] = useState("asc");
     const [limit, setLimit] = useState(10);
+    const [query, setQuery] = useState("");
 
     useEffect(() => {
         async function getProducts() {
-            const res = await fetch(
-                `${url}?sortOrder=${sortOrder}&limit=${limit}`
-            );
-            const data = await res.json();
-            setProducts(data.data);
+            const response = await getData(limit, sortOrder);
+            setProducts(response.data);
         }
         getProducts();
     }, [limit, sortOrder]);
@@ -34,18 +33,21 @@ export default function ProductList() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {products.map((product) => (
-                    <Link key={product.id} to={"product/" + product.id}>
+                    <Link key={product.id} to={`/product/${product.id}`}>
                         <div className="bg-white rounded-2xl shadow-lg p-5 space-y-4">
                             <img
-                                src={product.image.url}
-                                alt={product.image.alt || "Product image"}
+                                src={product.image?.url || "default-image-url"} // Use a fallback image if image.url is missing
+                                alt={product.image?.alt || "Product image"} // Use a fallback alt text if image.alt is missing
                                 className="w-full h-60 object-cover rounded-xl"
                             />
                             <h2 className="text-lg font-semibold">
-                                {product.title}
+                                {product.title || "No title available"}{" "}
+                                {/* Fallback if title is missing */}
                             </h2>
                             <p className="text-gray-600">
-                                {product.description}
+                                {product.description ||
+                                    "No description available"}{" "}
+                                {/* Fallback if description is missing */}
                             </p>
                             <p className="mt-2 text-lg font-medium">
                                 Price:{" "}
@@ -54,6 +56,7 @@ export default function ProductList() {
                                         <span className="text-gray-500 line-through mr-2">
                                             {product.price}kr
                                         </span>
+                                        <br />
                                         <span className="text-red-500 font-bold">
                                             Sale: {product.discountedPrice}kr
                                         </span>
@@ -63,12 +66,14 @@ export default function ProductList() {
                                 )}
                             </p>
                             <p className="text-yellow-500 mt-2">
-                                ⭐ {product.rating}/5
+                                ⭐ {product.rating || "No rating"} / 5{" "}
+                                {/* Fallback if rating is missing */}
                             </p>
                         </div>
                     </Link>
                 ))}
             </div>
+
             <div className="flex justify-center mt-6">
                 <button
                     onClick={() => setLimit(limit + 10)}
