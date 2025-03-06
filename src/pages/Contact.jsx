@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { data, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Contact = () => {
     const {
@@ -119,7 +119,7 @@ const Contact = () => {
 
                 <button
                     type="submit"
-                    className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
+                    className="w-full bg-amber-400 text-white p-2 rounded-lg hover:bg-amber-600 transition"
                 >
                     Submit
                 </button>
