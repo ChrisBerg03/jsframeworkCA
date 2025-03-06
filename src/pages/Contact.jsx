@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 
 const Contact = () => {
     const {
@@ -12,6 +12,14 @@ const Contact = () => {
     const navigate = useNavigate();
 
     const onSubmit = () => {
+        const formObj = {
+            name: document.querySelector("#nameInput").value,
+            subject: document.querySelector("#subjectInput").value,
+            email: document.querySelector("#emailInput").value,
+            message: document.querySelector("#messageInput").value,
+        };
+        console.log(formObj);
+
         toast.success("Form submitted successfully!", { autoClose: 1000 });
         setTimeout(() => navigate("/"), 1500);
     };
@@ -25,6 +33,7 @@ const Contact = () => {
                 <div>
                     <label className="block mb-1">Full Name</label>
                     <input
+                        id="nameInput"
                         type="text"
                         placeholder="Full Name"
                         {...register("name", {
@@ -46,6 +55,7 @@ const Contact = () => {
                 <div>
                     <label className="block mb-1">Subject</label>
                     <input
+                        id="subjectInput"
                         type="text"
                         placeholder="Subject"
                         {...register("subject", {
@@ -67,6 +77,7 @@ const Contact = () => {
                 <div>
                     <label className="block mb-1">Email</label>
                     <input
+                        id="emailInput"
                         type="email"
                         placeholder="Email"
                         {...register("email", {
@@ -88,6 +99,7 @@ const Contact = () => {
                 <div>
                     <label className="block mb-1">Message</label>
                     <textarea
+                        id="messageInput"
                         placeholder="Message"
                         {...register("message", {
                             required: "Message is required",
