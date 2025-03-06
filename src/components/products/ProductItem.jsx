@@ -24,7 +24,6 @@ export default function ProductItem() {
                     throw new Error("Failed to fetch product");
                 }
                 const data = await response.json();
-                console.log(data.data);
 
                 setProduct(data.data);
             } catch (error) {
@@ -79,7 +78,7 @@ export default function ProductItem() {
 
                 <button
                     onClick={() => addToCart(product)}
-                    className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 rounded-xl transition duration-300"
+                    className="cursor-pointer w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 rounded-xl transition duration-300"
                 >
                     Add to Cart
                 </button>

@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { useCart } from "../../stores/store";
 
 export function Header() {
     const [isOpen, setIsOpen] = useState(false);
+    const { cart } = useCart();
+
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
     return (
         <header className="bg-amber-300 w-full h-16 flex items-center px-4 md:px-8 shadow-md">
@@ -18,13 +22,18 @@ export function Header() {
                     <Link to="/contact" className="hover:text-amber-600">
                         Contact
                     </Link>
-                    <Link to="/cart">
+                    <Link to="/cart" className="relative">
                         <img
                             src="/cart.svg"
                             alt="Cart"
                             height={30}
                             width={30}
                         />
+                        {totalItems > 0 && (
+                            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                {totalItems}
+                            </span>
+                        )}
                     </Link>
                 </nav>
 
@@ -52,13 +61,22 @@ export function Header() {
                     >
                         Contact
                     </Link>
-                    <Link to="/cart" onClick={() => setIsOpen(false)}>
+                    <Link
+                        to="/cart"
+                        onClick={() => setIsOpen(false)}
+                        className="relative"
+                    >
                         <img
                             src="/cart.svg"
                             alt="Cart"
                             height={30}
                             width={30}
                         />
+                        {totalItems > 0 && (
+                            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                {totalItems}
+                            </span>
+                        )}
                     </Link>
                 </div>
             )}

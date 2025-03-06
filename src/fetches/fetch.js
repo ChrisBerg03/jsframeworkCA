@@ -12,18 +12,3 @@ export async function getData(limit, sortOrder) {
         return [];
     }
 }
-
-export async function search(query) {
-    const url = `https://v2.api.noroff.dev/online-shop?search=${query}`;
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error("Error fetching search data:", error);
-        return [];
-    }
-}

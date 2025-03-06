@@ -9,10 +9,16 @@ export const useCart = create((set) => ({
                 (item) => item.id === product.id
             );
             if (existingItem) {
+                if (existingItem.quantity >= 10) {
+                    return state;
+                }
                 return {
                     cart: state.cart.map((item) =>
                         item.id === product.id
-                            ? { ...item, quantity: item.quantity + 1 }
+                            ? {
+                                  ...item,
+                                  quantity: Math.min(item.quantity + 1, 10),
+                              }
                             : item
                     ),
                 };
